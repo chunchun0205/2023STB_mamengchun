@@ -19,15 +19,15 @@ searchUrl <- "https://openapi.naver.com/v1/search/news.xml"
 Client_ID <- "rYuAzIPJaEXAkeYa9kRf"
 Client_Secret <- "uK5U1kBbhR"
 
-#뉴스 URL 작성(UTF-8로 암호화, API 요청할 URL 정의, 검색결과는 20로 요청)
-query <- URLencode(iconv("IKEA", "euc-kr", "UTF-8"))
-url <- paste(searchUrl, "?query=", query, "&display=20", sep="")
+#뉴스 URL 작성(UTF-8로 암호화, API 요청할 URL 정의, 검색결과는 100로 요청)
+query <- URLencode(iconv("경영통계", to="UTF-8"))
+url <- paste(searchUrl, "?query=", query, "&display=100&start=1&sort=sim", sep="")
 
 #문서 다운로드_URI 다운로드하기
 doc <- getURL(url, 
               httpheader = c('Content-Type' = "apllication/xml",
-              'X-Naver-CLient-Id' = Client_ID, 
-              'X-Naver-CLient-Secret' = Client_Secret))
+                             'X-Naver-CLient-Id' = Client_ID, 
+                             'X-Naver-CLient-Secret' = Client_Secret))
 doc
 
 #뉴스 추출 및 단어 간 빈도 비교
@@ -76,10 +76,10 @@ nouns.df.sort
 
 #단어의 워드 클라우드 작성
 wordcloud(nouns.df.sort[,1],
-                freq=nouns.df.sort[,2],
-                min.freq=1,
-                scale=c(3,0.7),
-                rot.per=0.25,
-                random.order=F,
-                random.color=T,
-                colors=rainbow(10))
+          freq=nouns.df.sort[,2],
+          min.freq=1,
+          scale=c(3,0.7),
+          rot.per=0.25,
+          random.order=F,
+          random.color=T,
+          colors=rainbow(10))
