@@ -1,10 +1,27 @@
-searchUrl <- "https://openapi.naver.com/v1/search/blog.xml"
+#실습에 필요한 packages를 설치
+install.packages("RCurl")
+install.packages("XML")
+install.packages("wordcloud")
+install.packages("RmecabKo")
+
+#실습에 필요한 packages를 라이브러리에 등록
+library(RCurl)
+library(XML)
+library(wordcloud)
+library(RmecabKo)
+
+#RmecabKo package에서 사용하는 형태소 기본기능 설치(폴더 자동생성) 및 등록
+install_mecab("C:/Rlibs/mecab")
+library(RmecabKo)
+
+#뉴스 API 설정(Client_ID와 Client_Secret은 개인별로 추가)
+searchUrl <- "https://openapi.naver.com/v1/search/news.xml"
 Client_ID <- "rYuAzIPJaEXAkeYa9kRf"
 Client_Secret <- "uK5U1kBbhR"
 
-#뉴스 URL 작성(UTF-8로 암호화, API 요청할 URL 정의, 검색결과는 20로 요청)
-query <- URLencode(iconv("IKEA", "euc-kr", "UTF-8"))
-url <- paste(searchUrl, "?query=", query, "&display=20", sep="")
+#뉴스 URL 작성(UTF-8로 암호화, API 요청할 URL 정의, 검색결과는 100로 요청)
+query <- URLencode(iconv("이케아", to="UTF-8"))
+url <- paste(searchUrl, "?query=", query, "&display=100&start=1&sort=sim", sep="")
 
 #문서 다운로드_URI 다운로드하기
 doc <- getURL(url, 
